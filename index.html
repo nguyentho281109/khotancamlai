@@ -1,1 +1,1111 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Khổ Tận Cam Lại | Toán 12 - Chương I & II (Bài 1 đến Bài 10)</title>
+   
+    <script src="https://cdn.tailwindcss.com"></script>
+  
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body, {
+        delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false},
+            {left: '\\(', right: '\\)', display: false},
+            {left: '\\[', right: '\\]', display: true}
+        ]
+    });"></script>
 
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: {
+                            900: '#F4F7F4', // Nền sáng thiên nhiên (Trắng ngà pha chút xanh lá nhạt)
+                            800: '#FFFFFF',
+                            700: '#EAEEEC',
+                            600: '#D2DDD7'
+                        },
+                        neon: {
+                            cyan: '#0D9488',   // Xanh mòng két (Teal)
+                            purple: '#047857', // Xanh lá đậm tự nhiên
+                            pink: '#059669',   // Xanh lá cây (Emerald)
+                            emerald: '#10B981',// Xanh lá sáng
+                            amber: '#D97706'   // Vàng hổ phách ấm áp
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F4F7F4;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #CBD5E1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94A3B8;
+        }
+
+        .perspective-container {
+            perspective: 1200px;
+            overflow-x: hidden;
+        }
+
+        /* Nâng cấp animation chuyển trang siêu mượt, bồng bềnh và có chiều sâu */
+        .page-view {
+            transition: all 0.7s cubic-bezier(0.25, 1, 0.5, 1);
+            transform-style: preserve-3d;
+            backface-visibility: hidden;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(40px) rotateX(-8deg) scale(0.94);
+        }
+
+        .page-view.active {
+            opacity: 1;
+            pointer-events: auto;
+            position: relative;
+            transform: translateY(0) rotateX(0deg) scale(1);
+            animation: floatIn 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+        }
+
+        .page-view.prev-out {
+            opacity: 0;
+            transform: translateY(-40px) rotateX(8deg) scale(0.94);
+        }
+
+        @keyframes floatIn {
+            0% {
+                opacity: 0;
+                transform: translateY(30px) scale(0.96);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(209, 230, 218, 0.8);
+            box-shadow: 0 12px 30px -8px rgba(16, 185, 129, 0.08), 0 8px 12px -6px rgba(16, 185, 129, 0.04);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Hiệu ứng nổi nhẹ khi di chuột vào card bài học */
+        .glass-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 18px 40px -10px rgba(16, 185, 129, 0.15);
+        }
+
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(209, 230, 218, 0.8);
+            box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.05);
+        }
+
+        /* Hiệu ứng vẽ nét đồ thị mượt mà và sinh động hơn */
+        .dash-anim {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: dash 3s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
+        }
+
+        @keyframes dash {
+            0% { stroke-dashoffset: 1000; }
+            50% { stroke-dashoffset: 0; }
+            100% { stroke-dashoffset: 1000; }
+        }
+
+        /* Hiệu ứng pulse chuyển động cho các nút và điểm nhấn */
+        @keyframes pulseGlow {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.05); opacity: 1; }
+        }
+
+        .pulse-glow {
+            animation: pulseGlow 4s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="bg-navy-900 text-slate-800 font-sans min-h-screen flex flex-col justify-between selection:bg-emerald-100 selection:text-emerald-900">
+
+    <!-- Ambient Background Glows (Natural Greens & Sun tones with smooth pulse) -->
+    <div class="fixed top-0 left-1/4 w-96 h-96 bg-emerald-200/40 rounded-full filter blur-[120px] pointer-events-none z-0 pulse-glow"></div>
+    <div class="fixed bottom-0 right-1/4 w-96 h-96 bg-teal-200/40 rounded-full filter blur-[120px] pointer-events-none z-0 pulse-glow" style="animation-delay: 2s;"></div>
+
+    <!-- Header / Floating Nav Bar -->
+    <header class="sticky top-4 z-50 px-4 max-w-6xl mx-auto w-full transition-all duration-300">
+        <nav class="glass-nav rounded-2xl px-4 py-3 flex items-center justify-between shadow-lg">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-600 flex items-center justify-center font-bold text-white shadow-md shadow-emerald-500/25 transition-transform duration-300 hover:rotate-6">
+                    <i class="fa-solid fa-square-root-variable text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="font-extrabold text-base sm:text-lg tracking-wide text-slate-900 flex items-center gap-2">
+                        Khổ Tận Cam Lại <span class="text-xs bg-emerald-100 text-emerald-800 border border-emerald-300 px-2 py-0.5 rounded-full font-semibold">KNTT</span>
+                    </h1>
+                    <p class="text-[10px] sm:text-xs text-slate-500">Chương I & II: Toán 12 (Bài 1 đến Bài 10)</p>
+                </div>
+            </div>
+
+            <!-- Desktop Navigation Tabs (10 Bài) -->
+            <div class="hidden lg:flex items-center gap-1 bg-slate-100 p-1.5 rounded-xl border border-emerald-100 overflow-x-auto max-w-xl">
+                <button onclick="switchTab(1)" id="nav-btn-1" class="nav-tab px-2.5 py-1.5 rounded-lg text-xs font-semibold transition-all duration-300 text-emerald-700 bg-white shadow-sm whitespace-nowrap">B1</button>
+                <button onclick="switchTab(2)" id="nav-btn-2" class="nav-tab px-2.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition-all duration-300 whitespace-nowrap">B2</button>
+                <button onclick="switchTab(3)" id="nav-btn-3" class="nav-tab px-2.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition-all duration-300 whitespace-nowrap">B3</button>
+                <button onclick="switchTab(4)" id="nav-btn-4" class="nav-tab px-2.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition-all duration-300 whitespace-nowrap">B4</button>
+                <button onclick="switchTab(5)" id="nav-btn-5" class="nav-tab px-2.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition-all duration-300 whitespace-nowrap">B5</button>
+                <button onclick="switchTab(6)" id="nav-btn-6" class="nav-tab px-2.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition-all duration-300 whitespace-nowrap">B7</button>
+                <button onclick="switchTab(7)" id="nav-btn-7" class="nav-tab px-2.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition-all duration-300 whitespace-nowrap">B8</button>
+                <button onclick="switchTab(8)" id="nav-btn-8" class="nav-tab px-2.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition-all duration-300 whitespace-nowrap">B9</button>
+                <button onclick="switchTab(9)" id="nav-btn-9" class="nav-tab px-2.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition-all duration-300 whitespace-nowrap">B10</button>
+            </div>
+
+            <div class="flex items-center gap-2">
+                <button onclick="toggleAllFlashcards()" class="p-2 rounded-xl bg-white border border-emerald-200 hover:border-emerald-500 text-slate-700 hover:text-emerald-700 transition-all duration-300 text-xs flex items-center gap-1.5 shadow-sm hover:scale-105 active:scale-95" title="Mở/Thu gọn bài tập">
+                    <i class="fa-solid fa-pen-to-square text-amber-600"></i>
+                    <span class="hidden sm:inline">Bài tập</span>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Mobile Navigation Menu Dropdown / Tabs -->
+        <div class="lg:hidden mt-2 grid grid-cols-5 gap-1 bg-white/90 p-1 rounded-xl border border-emerald-100 text-center shadow-md">
+            <button onclick="switchTab(1)" id="mob-btn-1" class="mob-tab py-1.5 rounded-lg text-[10px] font-bold text-emerald-700 bg-emerald-50 transition-all">Bài 1</button>
+            <button onclick="switchTab(2)" id="mob-btn-2" class="mob-tab py-1.5 rounded-lg text-[10px] font-bold text-slate-600 transition-all">Bài 2</button>
+            <button onclick="switchTab(3)" id="mob-btn-3" class="mob-tab py-1.5 rounded-lg text-[10px] font-bold text-slate-600 transition-all">Bài 3</button>
+            <button onclick="switchTab(4)" id="mob-btn-4" class="mob-tab py-1.5 rounded-lg text-[10px] font-bold text-slate-600 transition-all">Bài 4</button>
+            <button onclick="switchTab(5)" id="mob-btn-5" class="mob-tab py-1.5 rounded-lg text-[10px] font-bold text-slate-600 transition-all">Bài 5</button>
+            <button onclick="switchTab(6)" id="mob-btn-6" class="mob-tab py-1.5 rounded-lg text-[10px] font-bold text-slate-600 transition-all">Bài 7</button>
+            <button onclick="switchTab(7)" id="mob-btn-7" class="mob-tab py-1.5 rounded-lg text-[10px] font-bold text-slate-600 transition-all">Bài 8</button>
+            <button onclick="switchTab(8)" id="mob-btn-8" class="mob-tab py-1.5 rounded-lg text-[10px] font-bold text-slate-600 transition-all">Bài 9</button>
+            <button onclick="switchTab(9)" id="mob-btn-9" class="mob-tab py-1.5 rounded-lg text-[10px] font-bold text-slate-600 transition-all">Bài 10</button>
+        </div>
+    </header>
+
+    <!-- Main Content Container with 3D Viewport -->
+    <main class="max-w-5xl mx-auto px-4 py-6 w-full flex-grow relative perspective-container z-10">
+
+        <!-- ==========================================
+             BÀI 1: TÍNH ĐƠN ĐIỆU VÀ CỰC TRỊ CỦA HÀM SỐ
+             ========================================== -->
+        <div id="page-1" class="page-view active">
+            <div class="space-y-6">
+                <div class="glass-card rounded-2xl p-6 relative overflow-hidden border-l-4 border-l-teal-600 shadow-sm">
+                    <div class="flex justify-between items-start gap-4">
+                        <div>
+                            <span class="text-xs font-mono font-semibold uppercase text-teal-700 tracking-wider">Bài 01 - Chương I</span>
+                            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1">Tính đơn điệu và Cực trị của Hàm số</h2>
+                            <p class="text-slate-600 text-sm mt-2 max-w-2xl">
+                                Sử dụng dấu của đạo hàm $y' = f'(x)$ để xét sự biến thiên (đồng biến, nghịch biến) và xác định các điểm cực trị của hàm số.
+                            </p>
+                        </div>
+                        <div class="hidden sm:flex text-4xl text-teal-600/20 transition-transform hover:scale-110">
+                            <i class="fa-solid fa-chart-line"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="glass-card rounded-2xl p-5 hover:border-teal-300 transition-all shadow-sm">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-8 h-8 rounded-lg bg-teal-100 text-teal-700 flex items-center justify-center font-bold">1</div>
+                            <h3 class="text-lg font-bold text-slate-900">Tính Đơn Điệu & Dấu Đạo Hàm</h3>
+                        </div>
+                        <div class="space-y-3 text-sm text-slate-700">
+                            <div class="p-3 bg-emerald-50/50 rounded-xl border border-emerald-100 transition-transform hover:translate-x-1">
+                                <p class="font-semibold text-emerald-800 mb-1"><i class="fa-solid fa-arrow-trend-up mr-1"></i> Đồng biến (Tăng):</p>
+                                <p>Hàm số đồng biến trên $K \iff f'(x) \ge 0, \forall x \in K$ (bằng 0 tại hữu hạn điểm).</p>
+                            </div>
+                            <div class="p-3 bg-emerald-50/50 rounded-xl border border-emerald-100 transition-transform hover:translate-x-1">
+                                <p class="font-semibold text-teal-800 mb-1"><i class="fa-solid fa-arrow-trend-down mr-1"></i> Nghịch biến (Giảm):</p>
+                                <p>Hàm số nghịch biến trên $K \iff f'(x) \le 0, \forall x \in K$ (bằng 0 tại hữu hạn điểm).</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card rounded-2xl p-5 hover:border-emerald-300 transition-all shadow-sm">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold">2</div>
+                            <h3 class="text-lg font-bold text-slate-900">Cực Trị Hàm Số</h3>
+                        </div>
+                        <div class="space-y-3 text-sm text-slate-700">
+                            <p class="text-xs text-slate-500">Giả sử $f(x)$ liên tục trên $(a,b)$ chứa điểm $x_0$ và có đạo hàm trên $(a,b) \setminus \{x_0\}$:</p>
+                            <div class="p-2.5 bg-emerald-50/50 rounded-xl border border-emerald-100 transition-transform hover:translate-x-1">
+                                <span class="text-teal-800 font-bold">Cực đại ($x_{CĐ}$):</span> Đạo hàm $f'(x)$ đổi dấu từ <span class="text-teal-800 font-semibold">DƯƠNG (+) sang ÂM (-)</span> khi qua $x_0$.
+                            </div>
+                            <div class="p-2.5 bg-emerald-50/50 rounded-xl border border-emerald-100 transition-transform hover:translate-x-1">
+                                <span class="text-emerald-800 font-bold">Cực tiểu ($x_{CT}$):</span> Đạo hàm $f'(x)$ đổi dấu từ <span class="text-emerald-800 font-semibold">ÂM (-) sang DƯƠNG (+)</span> khi qua $x_0$.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-2xl p-5 border border-emerald-200 shadow-sm">
+                    <div class="flex items-center justify-between cursor-pointer group" onclick="toggleFlashcard('fc-1')">
+                        <div class="flex items-center gap-3">
+                            <i class="fa-solid fa-list-check text-emerald-700 transition-transform group-hover:scale-125"></i>
+                            <h3 class="font-bold text-slate-900 text-base group-hover:text-emerald-700 transition-colors">Quy trình 4 bước xét Đơn điệu & Cực trị</h3>
+                        </div>
+                        <i id="fc-1-icon" class="fa-solid fa-chevron-down text-slate-400 transition-transform duration-300"></i>
+                    </div>
+                    <div id="fc-1" class="mt-4 pt-4 border-t border-emerald-100 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 text-xs transition-all duration-500">
+                        <div class="p-3 bg-emerald-50/40 rounded-xl border border-emerald-100 hover:scale-[1.02] transition-transform">
+                            <span class="text-emerald-700 font-bold block mb-1">Bước 1</span>
+                            Tìm Tập xác định (TXĐ) $D$ của hàm số.
+                        </div>
+                        <div class="p-3 bg-emerald-50/40 rounded-xl border border-emerald-100 hover:scale-[1.02] transition-transform">
+                            <span class="text-emerald-700 font-bold block mb-1">Bước 2</span>
+                            Tính đạo hàm $y' = f'(x)$. Tìm nghiệm $f'(x) = 0$ hoặc nơi $f'$ không xác định.
+                        </div>
+                        <div class="p-3 bg-emerald-50/40 rounded-xl border border-emerald-100 hover:scale-[1.02] transition-transform">
+                            <span class="text-emerald-700 font-bold block mb-1">Bước 3</span>
+                            Lập **Bảng biến thiên** (xét dấu $y'$ và chiều biến thiên $y$).
+                        </div>
+                        <div class="p-3 bg-emerald-50/40 rounded-xl border border-emerald-100 hover:scale-[1.02] transition-transform">
+                            <span class="text-emerald-700 font-bold block mb-1">Bước 4</span>
+                            Kết luận về khoảng đồng biến, nghịch biến và các điểm cực trị.
+                        </div>
+                    </div>
+
+                    <!-- Bài tập thực tế ẩn mặc định, bấm vào nút Bài tập trên header sẽ hiện -->
+                    <div id="exercise-box" class="mt-4 pt-4 border-t border-emerald-100 hidden space-y-2 text-xs transition-all duration-500">
+                        <p class="font-bold text-amber-700 text-sm flex items-center gap-2">
+                            <i class="fa-solid fa-pen-to-square"></i> Bài tập ứng dụng thực tế:
+                        </p>
+                        <p class="text-slate-700">
+                            Một xí nghiệp sản xuất sản phẩm với chi phí $C(x) = 50x + 2000$ (nghìn đồng) và doanh thu $R(x) = 100x$ (nghìn đồng) trong đó $x$ là số đơn vị sản phẩm tiêu thụ (với $0 \le x \le 100$). Hỏi sản xuất và bán bao nhiêu sản phẩm thì lợi nhuận lớn nhất? Giá trị lớn nhất đó là bao nhiêu?
+                        </p>
+                        <div class="p-3 bg-emerald-50/60 rounded-lg border border-emerald-200 space-y-1 text-slate-700">
+                            <p class="font-semibold text-teal-800">Lời giải chi tiết:</p>
+                            <p>• Hàm số biểu diễn lợi nhuận của xí nghiệp là: <br>$P(x) = R(x) - C(x) = 100x - (50x + 2000) = 50x - 2000$ (với $0 \le x \le 100$).</p>
+                            <p>• Tính đạo hàm: $P'(x) = 50 > 0, \forall x \in [0; 100]$, suy ra hàm số lợi nhuận đồng biến trên đoạn $[0; 100]$.</p>
+                            <p>• Do đó, hàm số đạt giá trị lớn nhất tại biên phải $x = 100$.</p>
+                            <p class="text-amber-800 font-semibold">• Kết luận: Sản xuất và bán đúng $100$ sản phẩm thì lợi nhuận đạt lớn nhất. Giá trị lợi nhuận lớn nhất là: <br>$P(100) = 50(100) - 2000 = 3000$ (nghìn đồng) = 3 triệu đồng.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-2xl p-5 shadow-sm">
+                    <h3 class="text-base font-bold text-slate-900 mb-3 flex items-center gap-2">
+                        <i class="fa-solid fa-table-list text-emerald-700"></i> Mô phỏng Bảng Biến Thiên Hàm Bậc 3 $y = x^3 - 3x$
+                    </h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-center border-collapse text-xs sm:text-sm font-mono border border-emerald-100 rounded-xl overflow-hidden">
+                            <thead>
+                                <tr class="bg-emerald-50/60 border-b border-emerald-100 text-slate-700">
+                                    <th class="py-2.5 px-3 text-left">x</th>
+                                    <th class="py-2.5 px-3">$-\infty$</th>
+                                    <th class="py-2.5 px-3"></th>
+                                    <th class="py-2.5 px-3 text-teal-700">-1</th>
+                                    <th class="py-2.5 px-3"></th>
+                                    <th class="py-2.5 px-3 text-emerald-700">1</th>
+                                    <th class="py-2.5 px-3"></th>
+                                    <th class="py-2.5 px-3">+$ \infty$</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b border-emerald-100 bg-white">
+                                    <td class="py-2.5 px-3 text-left font-sans font-semibold text-slate-700">y'</td>
+                                    <td class="py-2.5 px-3"></td>
+                                    <td class="py-2.5 px-3 text-teal-700 font-bold">+</td>
+                                    <td class="py-2.5 px-3 font-bold">0</td>
+                                    <td class="py-2.5 px-3 text-emerald-700 font-bold">-</td>
+                                    <td class="py-2.5 px-3 font-bold">0</td>
+                                    <td class="py-2.5 px-3 text-teal-700 font-bold">+</td>
+                                    <td class="py-2.5 px-3"></td>
+                                </tr>
+                                <tr class="bg-white">
+                                    <td class="py-4 px-3 text-left font-sans font-semibold text-slate-700">y</td>
+                                    <td class="py-4 px-3 align-bottom text-slate-400">$-\infty$</td>
+                                    <td class="py-4 px-3 text-teal-600 animate-pulse">↗</td>
+                                    <td class="py-4 px-3 text-teal-700 font-bold text-base">2 <span class="block text-[10px] text-slate-500 font-sans">(CĐ)</span></td>
+                                    <td class="py-4 px-3 text-emerald-600 animate-pulse">↘</td>
+                                    <td class="py-4 px-3 text-emerald-700 font-bold text-base">-2 <span class="block text-[10px] text-slate-500 font-sans">(CT)</span></td>
+                                    <td class="py-4 px-3 text-teal-600 animate-pulse">↗</td>
+                                    <td class="py-4 px-3 align-top text-slate-400 font-mono">+$ \infty$</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==========================================
+             BÀI 2: GIÁ TRỊ LỚN NHẤT VÀ GIÁ TRỊ NHỎ NHẤT
+             ========================================== -->
+        <div id="page-2" class="page-view">
+            <div class="space-y-6">
+                <div class="glass-card rounded-2xl p-6 relative overflow-hidden border-l-4 border-l-emerald-600 shadow-sm">
+                    <div class="flex justify-between items-start gap-4">
+                        <div>
+                            <span class="text-xs font-mono font-semibold uppercase text-emerald-700 tracking-wider">Bài 02 - Chương I</span>
+                            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1">Giá trị Lớn nhất & Nhỏ nhất của Hàm số</h2>
+                            <p class="text-slate-600 text-sm mt-2 max-w-2xl">
+                                Phương pháp xác định $\max f(x)$ và $\min f(x)$ trên một khoảng hoặc trên đoạn đóng $[a, b]$ và ứng dụng thực tế optimization.
+                            </p>
+                        </div>
+                        <div class="hidden sm:flex text-4xl text-emerald-600/20 transition-transform hover:scale-110">
+                            <i class="fa-solid fa-arrows-up-down text-4xl"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="glass-card rounded-2xl p-5 hover:border-emerald-300 transition-all shadow-sm">
+                        <h3 class="text-lg font-bold text-slate-900 mb-3 flex items-center gap-2">
+                            <i class="fa-solid fa-bookmark text-emerald-700"></i> Định nghĩa
+                        </h3>
+                        <div class="space-y-3 text-sm text-slate-700">
+                            <div class="p-3 bg-emerald-50/45 rounded-xl border border-emerald-100 transition-transform hover:translate-x-1">
+                                <p class="font-bold text-slate-900">Giá trị lớn nhất ($M = \max_{D} f(x)$):</p>
+                                <ul class="list-disc list-inside text-xs mt-1 space-y-1 text-slate-600">
+                                    <li>$f(x) \le M, \forall x \in D$</li>
+                                    <li>Tồn tại $x_0 \in D$ sao cho $f(x_0) = M$</li>
+                                </ul>
+                            </div>
+                            <div class="p-3 bg-emerald-50/45 rounded-xl border border-emerald-100 transition-transform hover:translate-x-1">
+                                <p class="font-bold text-slate-900">Giá trị nhỏ nhất ($m = \min_{D} f(x)$):</p>
+                                <ul class="list-disc list-inside text-xs mt-1 space-y-1 text-slate-600">
+                                    <li>$f(x) \ge m, \forall x \in D$</li>
+                                    <li>Tồn tại $x_0 \in D$ sao cho $f(x_0) = m$</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card rounded-2xl p-5 hover:border-teal-300 transition-all shadow-sm">
+                        <h3 class="text-lg font-bold text-slate-900 mb-3 flex items-center gap-2">
+                            <i class="fa-solid fa-bolt text-teal-700"></i> Quy tắc tìm GTLN, GTNN trên đoạn $[a,b]$
+                        </h3>
+                        <p class="text-xs text-slate-500 mb-3">
+                            Cho hàm số $y = f(x)$ liên tục trên đoạn $[a, b]$:
+                        </p>
+                        <ol class="list-decimal list-inside text-xs text-slate-700 space-y-2 font-mono">
+                            <li class="p-2 bg-emerald-50/40 rounded-lg border border-emerald-100 transition-transform hover:translate-x-1">Tính $f'(x)$. Tìm các nghiệm $x_1, x_2, ... \in (a,b)$ của $f'(x)=0$.</li>
+                            <li class="p-2 bg-emerald-50/40 rounded-lg border border-emerald-100 transition-transform hover:translate-x-1">Tính giá trị $f(a), f(b)$ và $f(x_1), f(x_2),...$</li>
+                            <li class="p-2 bg-emerald-50/40 rounded-lg border border-emerald-100 text-teal-800 font-bold transition-transform hover:translate-x-1">
+                                $\max_{[a,b]} f(x) = \text{Số lớn nhất}$ trong các giá trị trên.
+                            </li>
+                            <li class="p-2 bg-emerald-50/40 rounded-lg border border-emerald-100 text-emerald-800 font-bold transition-transform hover:translate-x-1">
+                                $\min_{[a,b]} f(x) = \text{Số nhỏ nhất}$ trong các giá trị trên.
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-2xl p-5 border border-amber-200 shadow-sm">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-8 h-8 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center font-bold">
+                            <i class="fa-solid fa-boxes-stacked"></i>
+                        </div>
+                        <h3 class="text-base font-bold text-slate-900">Ứng dụng Tối ưu hóa Thực tế</h3>
+                    </div>
+                    <p class="text-xs text-slate-700 leading-relaxed mb-3">
+                        Trong thực tiễn kinh tế và kỹ thuật, bài toán tối ưu hoá yêu cầu tìm diện tích lớn nhất, chi phí nhỏ nhất, hoặc thể tích tối đa của một hình khối.
+                    </p>
+                    <div class="bg-emerald-50/50 p-3 rounded-xl border border-emerald-100 text-xs text-slate-600">
+                        <span class="text-amber-800 font-semibold">Ví dụ tiêu biểu:</span> Làm một hộp kim loại hình chữ nhật không nắp có thể tích lớn nhất từ một tấm tôn cho trước. Thiết lập hàm $V(x)$ theo kích thước cắt $x$, sau đó tìm $\max V(x)$ trên khoảng xác định.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==========================================
+             BÀI 3: ĐƯỜNG TIỆM CẬN CỦA ĐỒ THỊ HÀM SỐ
+             ========================================== -->
+        <div id="page-3" class="page-view">
+            <div class="space-y-6">
+                <div class="glass-card rounded-2xl p-6 relative overflow-hidden border-l-4 border-l-teal-700 shadow-sm">
+                    <div class="flex justify-between items-start gap-4">
+                        <div>
+                            <span class="text-xs font-mono font-semibold uppercase text-teal-700 tracking-wider">Bài 03 - Chương I</span>
+                            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1">Đường Tiệm Cận của Đồ Thị Hàm Số</h2>
+                            <p class="text-slate-600 text-sm mt-2 max-w-2xl">
+                                Nhận biết và xác định 3 loại đường tiệm cận: Tiệm cận đứng (TCĐ), Tiệm cận ngang (TCN) và Tiệm cận xiên (TCX).
+                            </p>
+                        </div>
+                        <div class="hidden sm:flex text-4xl text-teal-700/20 transition-transform hover:scale-110">
+                            <i class="fa-solid fa-chart-area"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="glass-card rounded-2xl p-4 hover:border-teal-300 transition-all flex flex-col justify-between shadow-sm">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <h3 class="font-bold text-teal-800 text-base">1. Tiệm cận Đứng (TCĐ)</h3>
+                                <span class="text-xs bg-teal-100 text-teal-800 px-2 py-0.5 rounded font-mono">x = x₀</span>
+                            </div>
+                            <p class="text-xs text-slate-600 mb-2">Đường thẳng $x = x_0$ là TCĐ nếu thỏa mãn ít nhất 1 trong các giới hạn:</p>
+                            <div class="bg-emerald-50/50 p-2.5 rounded-xl text-center text-xs font-mono text-slate-800 border border-emerald-100 mb-3">
+                                $\lim_{x \to x_0^+} f(x) = \pm\infty$ <br>hoặc $\lim_{x \to x_0^-} f(x) = \pm\infty$
+                            </div>
+                        </div>
+                        <p class="text-[11px] text-slate-500 italic"><i class="fa-solid fa-circle-info mr-1 text-teal-700"></i>Thường xảy ra tại nghiệm của mẫu số làm tử số khác 0.</p>
+                    </div>
+
+                    <div class="glass-card rounded-2xl p-4 hover:border-emerald-300 transition-all flex flex-col justify-between shadow-sm">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <h3 class="font-bold text-emerald-800 text-base">2. Tiệm cận Ngang (TCN)</h3>
+                                <span class="text-xs bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-mono">y = y₀</span>
+                            </div>
+                            <p class="text-xs text-slate-600 mb-2">Đường thẳng $y = y_0$ là TCN nếu thỏa mãn:</p>
+                            <div class="bg-emerald-50/50 p-2.5 rounded-xl text-center text-xs font-mono text-slate-800 border border-emerald-100 mb-3">
+                                $\lim_{x \to +\infty} f(x) = y_0$ <br>hoặc $\lim_{x \to -\infty} f(x) = y_0$
+                            </div>
+                        </div>
+                        <p class="text-[11px] text-slate-500 italic"><i class="fa-solid fa-circle-info mr-1 text-emerald-700"></i>Xét khi $x$ tiến ra vô cực $\pm\infty$.</p>
+                    </div>
+
+                    <div class="glass-card rounded-2xl p-4 hover:border-teal-300 transition-all flex flex-col justify-between shadow-sm">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <h3 class="font-bold text-teal-700 text-base">3. Tiệm cận Xiên (TCX)</h3>
+                                <span class="text-xs bg-teal-100 text-teal-800 px-2 py-0.5 rounded font-mono">y = ax + b</span>
+                            </div>
+                            <p class="text-xs text-slate-600 mb-2">Đường thẳng $y = ax + b$ ($a \neq 0$) với hệ số tìm bằng:</p>
+                            <div class="bg-emerald-50/50 p-2.5 rounded-xl text-xs font-mono text-slate-800 border border-emerald-100 mb-3 space-y-1">
+                                <div>$a = \lim_{x \to \pm\infty} \frac{f(x)}{x}$</div>
+                                <div>$b = \lim_{x \to \pm\infty} [f(x) - ax]$</div>
+                            </div>
+                        </div>
+                        <p class="text-[11px] text-slate-500 italic"><i class="fa-solid fa-circle-info mr-1 text-teal-700"></i>Hay gặp ở hàm phân thức bậc 2 trên bậc 1.</p>
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-2xl p-5 shadow-sm">
+                    <h3 class="text-base font-bold text-slate-900 mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-eye text-teal-700"></i> Hình ảnh Minh họa Đồ thị & Các Tiệm Cận
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                        <div class="relative bg-slate-900 rounded-xl p-4 border border-emerald-900 flex justify-center items-center h-60 shadow-inner">
+                            <svg class="w-full h-full max-w-xs" viewBox="0 0 200 200">
+                                <line x1="10" y1="100" x2="190" y2="100" stroke="#64748B" stroke-width="1.5" stroke-dasharray="2 2" />
+                                <line x1="100" y1="10" x2="100" y2="190" stroke="#64748B" stroke-width="1.5" stroke-dasharray="2 2" />
+                                <text x="180" y="95" fill="#94A3B8" font-size="10">x</text>
+                                <text x="105" y="20" fill="#94A3B8" font-size="10">y</text>
+                                <line x1="60" y1="10" x2="60" y2="190" stroke="#14B8A6" stroke-width="2" stroke-dasharray="4 4" />
+                                <text x="25" y="25" fill="#14B8A6" font-size="9" font-weight="bold">TCĐ: x = x₀</text>
+                                <line x1="10" y1="50" x2="190" y2="50" stroke="#10B981" stroke-width="2" stroke-dasharray="4 4" />
+                                <text x="130" y="42" fill="#10B981" font-size="9" font-weight="bold">TCN: y = y₀</text>
+                                <path d="M 10 58 Q 50 60 55 10" fill="none" stroke="#F59E0B" stroke-width="2.5" class="dash-anim" />
+                                <path d="M 65 190 Q 70 140 190 52" fill="none" stroke="#F59E0B" stroke-width="2.5" class="dash-anim" />
+                            </svg>
+                        </div>
+                        <div class="space-y-3 text-xs text-slate-700">
+                            <div class="p-3 bg-emerald-50/50 rounded-xl border border-emerald-100">
+                                <span class="font-bold text-teal-800">Hàm phân thức bậc nhất $y = \frac{ax+b}{cx+d}$ ($c \neq 0$):</span>
+                                <ul class="list-disc list-inside mt-1 space-y-1 text-slate-600">
+                                    <li>TCĐ: $x = -\frac{d}{c}$</li>
+                                    <li>TCN: $y = \frac{a}{c}$</li>
+                                </ul>
+                            </div>
+                            <div class="p-3 bg-emerald-50/50 rounded-xl border border-emerald-100">
+                                <span class="font-bold text-emerald-800">Hàm $y = \frac{ax^2+bx+c}{px+q}$:</span>
+                                <p class="text-slate-600 mt-1">Khi chia đa thức ta có $y = mx + n + \frac{r}{px+q} \implies$ TCX là $y = mx + n$.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==========================================
+             BÀI 4: KHẢO SÁT SỰ BIẾN THIÊN VẼ ĐỒ THỊ
+             ========================================== -->
+        <div id="page-4" class="page-view">
+            <div class="space-y-6">
+                <div class="glass-card rounded-2xl p-6 relative overflow-hidden border-l-4 border-l-emerald-700 shadow-sm">
+                    <div class="flex justify-between items-start gap-4">
+                        <div>
+                            <span class="text-xs font-mono font-semibold uppercase text-emerald-700 tracking-wider">Bài 04 - Chương I</span>
+                            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1">Khảo Sát Sự Biến Thiên & Vẽ Đồ Thị Hàm Số</h2>
+                            <p class="text-slate-600 text-sm mt-2 max-w-2xl">
+                                Tổng hợp sơ đồ quy trình 3 bước tổng quát và hình dạng đồ thị đặc trưng của các hàm số chính trong chương trình Toán 12.
+                            </p>
+                        </div>
+                        <div class="hidden sm:flex text-4xl text-emerald-700/20 transition-transform hover:scale-110">
+                            <i class="fa-solid fa-pen-ruler"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-2xl p-5 shadow-sm">
+                    <h3 class="text-base font-bold text-slate-900 mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-route text-emerald-700"></i> Quy trình 3 bước Khảo sát Hàm số
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="bg-emerald-50/40 p-4 rounded-xl border border-emerald-100 relative hover:scale-[1.02] transition-transform">
+                            <div class="w-7 h-7 rounded-full bg-emerald-700 text-white font-extrabold flex items-center justify-center text-xs mb-2">1</div>
+                            <h4 class="font-bold text-slate-900 text-sm mb-1">Tập xác định & Giới hạn</h4>
+                            <p class="text-xs text-slate-600">Tìm TXĐ. Tính giới hạn tại vô cực, tìm các đường tiệm cận (nếu có).</p>
+                        </div>
+                        <div class="bg-emerald-50/40 p-4 rounded-xl border border-emerald-100 relative hover:scale-[1.02] transition-transform">
+                            <div class="w-7 h-7 rounded-full bg-emerald-700 text-white font-extrabold flex items-center justify-center text-xs mb-2">2</div>
+                            <h4 class="font-bold text-slate-900 text-sm mb-1">Đạo hàm & Bảng biến thiên</h4>
+                            <p class="text-xs text-slate-600">Tính $y'$, tìm nghiệm $y'=0$. Xét dấu $y'$ và lập bảng biến thiên (chiều biến thiên, cực trị).</p>
+                        </div>
+                        <div class="bg-emerald-50/40 p-4 rounded-xl border border-emerald-100 relative hover:scale-[1.02] transition-transform">
+                            <div class="w-7 h-7 rounded-full bg-emerald-700 text-white font-extrabold flex items-center justify-center text-xs mb-2">3</div>
+                            <h4 class="font-bold text-slate-900 text-sm mb-1">Vẽ Đồ Thị</h4>
+                            <p class="text-xs text-slate-600">Tìm giao điểm với các trục tọa độ ($Ox, Oy$), các điểm đặc biệt. Vẽ tiệm cận và đồ thị đối xứng.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="glass-card rounded-2xl p-5 hover:border-emerald-300 transition-all shadow-sm">
+                        <h3 class="text-base font-bold text-slate-900 mb-3 text-emerald-800 flex items-center justify-between">
+                            <span>Hàm số bậc 3: $y = ax^3 + bx^2 + cx + d$</span>
+                            <span class="text-xs font-normal text-slate-500">($a \neq 0$)</span>
+                        </h3>
+                        <div class="space-y-2 text-xs text-slate-700">
+                            <p>• Tâm đối xứng là điểm uốn $I(x_0; y_0)$ với $x_0 = -\frac{b}{3a}$.</p>
+                            <p>• Tùy vào số nghiệm của $y' = 0$ (2 nghiệm hoặc vô nghiệm/nghiệm kép) và dấu của $a$ để xác định hình dạng chữ N hoặc đường lượn đơn điệu.</p>
+                        </div>
+                    </div>
+
+                    <div class="glass-card rounded-2xl p-5 hover:border-teal-300 transition-all shadow-sm">
+                        <h3 class="text-base font-bold text-slate-900 mb-3 text-teal-800 flex items-center justify-between">
+                            <span>Hàm phân thức $y = \frac{ax+b}{cx+d}$ & $y = \frac{ax^2+bx+c}{px+q}$</span>
+                        </h3>
+                        <div class="space-y-2 text-xs text-slate-700">
+                            <p>• **Hàm bậc 1 / bậc 1:** Đồ thị là đường Hyperbol nhận giao điểm 2 đường tiệm cận làm tâm đối xứng.</p>
+                            <p>• **Hàm bậc 2 / bậc 1:** Đồ thị gồm 2 nhánh nhận giao điểm giữa TCĐ và TCX làm tâm đối xứng.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==========================================
+             BÀI 5: KHẢO SÁT HÀM CHỨA DẤU GTTĐ / ĐỒ THỊ
+             ========================================== -->
+        <div id="page-5" class="page-view">
+            <div class="space-y-6">
+                <div class="glass-card rounded-2xl p-6 relative overflow-hidden border-l-4 border-l-teal-600 shadow-sm">
+                    <div class="flex justify-between items-start gap-4">
+                        <div>
+                            <span class="text-xs font-mono font-semibold uppercase text-teal-700 tracking-wider">Bài 05 - Chương I (SGK Kết nối tri thức)</span>
+                            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1">Khảo sát hàm số chứa dấu giá trị tuyệt đối</h2>
+                            <p class="text-slate-600 text-sm mt-2 max-w-2xl">
+                                Kỹ thuật vẽ và suy luận đồ thị, tìm số cực trị của các dạng hàm đặc biệt: $y = |f(x)|$ và $y = f(|x|)$ dựa vào đồ thị cho trước.
+                            </p>
+                        </div>
+                        <div class="hidden sm:flex text-4xl text-teal-600/20 transition-transform hover:scale-110">
+                            <i class="fa-solid fa-shapes text-4xl"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="glass-card rounded-2xl p-5 hover:border-teal-300 transition-all shadow-sm">
+                        <h3 class="text-base font-bold text-teal-800 mb-3 flex items-center gap-2">
+                            <i class="fa-solid fa-clone"></i> 1. Đồ thị hàm số $y = |f(x)|$
+                        </h3>
+                        <div class="space-y-3 text-xs text-slate-700">
+                            <div class="p-3 bg-emerald-50/45 rounded-xl border border-emerald-100 transition-transform hover:translate-x-1">
+                                <p class="font-bold text-slate-900 mb-1">Cách suy đồ thị:</p>
+                                <p>• Giữ nguyên phần đồ thị của hàm $y = f(x)$ nằm phía trên trục hoành ($Ox$).</p>
+                                <p class="mt-1">• Lấy đối xứng phần đồ thị nằm phía dưới trục hoành hắt ngược lên trên $Ox$ và xóa phần phía dưới đi.</p>
+                            </div>
+                            <div class="p-3 bg-emerald-50/45 rounded-xl border border-emerald-100 transition-transform hover:translate-x-1">
+                                <span class="text-teal-800 font-bold">Mẹo đếm cực trị:</span> Số cực trị của hàm $y = |f(x)|$ bằng tổng số cực trị nguyên bản của hàm $f(x)$ cộng với số giao điểm phân biệt của đồ thị $f(x)$ với trục hoành $Ox$.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card rounded-2xl p-5 hover:border-emerald-300 transition-all shadow-sm">
+                        <h3 class="text-base font-bold text-emerald-800 mb-3 flex items-center gap-2">
+                            <i class="fa-solid fa-arrows-split-up-and-left"></i> 2. Đồ thị hàm số $y = f(|x|)$
+                        </h3>
+                        <div class="space-y-3 text-xs text-slate-700">
+                            <div class="p-3 bg-emerald-50/45 rounded-xl border border-emerald-100 transition-transform hover:translate-x-1">
+                                <p class="font-bold text-slate-900 mb-1">Cách suy đồ thị:</p>
+                                <p>• Vì đây là hàm chẵn nên ta giữ nguyên phần đồ thị của hàm $f(x)$ nằm bên phải trục tung ($Oy$).</p>
+                                <p class="mt-1">• Xóa phần bên trái, sau đó lấy đối xứng phần bên phải vừa giữ qua trục $Oy$ sang phía bên trái.</p>
+                            </div>
+                            <div class="p-3 bg-emerald-50/45 rounded-xl border border-emerald-100 transition-transform hover:translate-x-1">
+                                <span class="text-emerald-800 font-bold">Mẹo đếm cực trị:</span> Nếu hàm đa thức cơ bản $f(x)$ có dạng quen thuộc, số cực trị của hàm $y = f(|x|)$ thường bằng $2k + 1$ (với $k$ là số điểm cực trị nằm bên phải trục $Oy$).
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==========================================
+             BÀI 7: ỨNG DỤNG ĐẠO HÀM GIẢI QUYẾT VẤN ĐỀ
+             ========================================== -->
+        <div id="page-6" class="page-view">
+            <div class="space-y-6">
+                <div class="glass-card rounded-2xl p-6 relative overflow-hidden border-l-4 border-l-amber-600 shadow-sm">
+                    <div class="flex justify-between items-start gap-4">
+                        <div>
+                            <span class="text-xs font-mono font-semibold uppercase text-amber-700 tracking-wider">Bài 07 - Chương I (SGK Kết nối tri thức)</span>
+                            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1">Ứng dụng đạo hàm giải quyết vấn đề thực tiễn</h2>
+                            <p class="text-slate-600 text-sm mt-2 max-w-2xl">
+                                Mô hình hóa các bài toán thực tiễn thuộc lĩnh vực vật lý (vận tốc, gia tốc), kinh tế (lợi nhuận, chi phí biên) và tối ưu hóa hình học.
+                            </p>
+                        </div>
+                        <div class="hidden sm:flex text-4xl text-amber-600/20 transition-transform hover:scale-110">
+                            <i class="fa-solid fa-gauge-high text-4xl"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="glass-card rounded-2xl p-5 hover:border-amber-300 transition-all shadow-sm">
+                        <h3 class="text-base font-bold text-amber-800 mb-3 flex items-center gap-2">
+                            <i class="fa-solid fa-person-running"></i> 1. Chuyển động cơ học & Vật lý
+                        </h3>
+                        <div class="space-y-3 text-xs text-slate-700">
+                            <div class="p-3 bg-emerald-50/45 rounded-xl border border-emerald-100 transition-transform hover:translate-x-1">
+                                <p class="font-bold text-slate-900 mb-1">Mối quan hệ Quãng đường - Vận tốc - Gia tốc:</p>
+                                <p>• Cho phương trình quãng đường chuyển động theo thời gian là $s(t)$.</p>
+                                <p class="mt-1">• Vận tốc tức thời của chuyển động: $v(t) = s'(t)$.</p>
+                                <p class="mt-1">• Gia tốc tức thời của chuyển động: $a(t) = v'(t) = s''(t)$.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card rounded-2xl p-5 hover:border-emerald-300 transition-all shadow-sm">
+                        <h3 class="text-base font-bold text-amber-800 mb-3 flex items-center gap-2">
+                            <i class="fa-solid fa-coins"></i> 2. Kinh tế vi mô & Tối ưu hóa sản xuất
+                        </h3>
+                        <div class="space-y-3 text-xs text-slate-700">
+                            <div class="p-3 bg-emerald-50/45 rounded-xl border border-emerald-100 transition-transform hover:translate-x-1">
+                                <p class="font-bold text-slate-900 mb-1">Chi phí biên & Lợi nhuận:</p>
+                                <p>• Hàm chi phí tổng sản xuất $C(x)$. Chi phí biên là đạo hàm $C'(x)$ (tốc độ thay đổi chi phí khi sản xuất thêm sản phẩm).</p>
+                                <p class="mt-1">• Lợi nhuận thu được: $P(x) = R(x) - C(x)$ (Doanh thu trừ Chi phí tổng). Tối ưu hóa lợi nhuận đạt tại điểm đạo hàm doanh thu bằng chi phí.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==========================================
+             BÀI 8: VECTƠ VÀ HỆ TOẠ ĐỘ TRONG KHÔNG GIAN (Mở rộng chi tiết & hay hơn)
+             ========================================== -->
+        <div id="page-7" class="page-view">
+            <div class="space-y-6">
+                <div class="glass-card rounded-2xl p-6 relative overflow-hidden border-l-4 border-l-emerald-600 shadow-sm">
+                    <div class="flex justify-between items-start gap-4">
+                        <div>
+                            <span class="text-xs font-mono font-semibold uppercase text-emerald-700 tracking-wider">Bài 08 - Chương II (SGK Kết nối tri thức)</span>
+                            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1">Vectơ và Hệ toạ độ trong không gian Oxyz</h2>
+                            <p class="text-slate-600 text-sm mt-2 max-w-2xl">
+                                Nền tảng hình học không gian giải tích: Hệ trục tọa độ vuông góc, tọa độ vectơ, các phép toán liên thông và ứng dụng tọa độ điểm toàn diện.
+                            </p>
+                        </div>
+                        <div class="hidden sm:flex text-4xl text-emerald-600/20 transition-transform hover:scale-110">
+                            <i class="fa-solid fa-cube text-4xl"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="glass-card rounded-2xl p-5 hover:border-emerald-300 transition-all shadow-sm">
+                        <h3 class="text-base font-bold text-emerald-800 mb-3 flex items-center gap-2">
+                            <i class="fa-solid fa-compass"></i> 1. Hệ tọa độ Oxyz & Vectơ đơn vị
+                        </h3>
+                        <div class="space-y-3 text-xs text-slate-700">
+                            <div class="p-3 bg-emerald-50/45 rounded-xl border border-emerald-100">
+                                <p class="font-bold text-slate-900 mb-1">Cấu trúc hệ trục & Biểu diễn:</p>
+                                <p>• Không gian Oxyz gồm 3 trục đôi một vuông góc: Hoành độ ($Ox$), Tung độ ($Oy$), Cao độ ($Oz$).</p>
+                                <p class="mt-1">• Các vectơ đơn vị tương ứng: $\vec{i} = (1;0;0)$, $\vec{j} = (0;1;0)$, $\vec{k} = (0;0;1)$.</p>
+                                <p class="mt-1">• Một vectơ bất kỳ phân tích duy nhất thành: $\vec{a} = x\vec{i} + y\vec{j} + z\vec{k} \iff \vec{a} = (x; y; z)$.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card rounded-2xl p-5 hover:border-teal-300 transition-all shadow-sm">
+                        <h3 class="text-base font-bold text-teal-800 mb-3 flex items-center gap-2">
+                            <i class="fa-solid fa-ruler-combined"></i> 2. Các phép toán tọa độ cơ bản
+                        </h3>
+                        <div class="space-y-3 text-xs text-slate-700">
+                            <div class="p-3 bg-emerald-50/45 rounded-xl border border-emerald-100">
+                                <p class="font-bold text-slate-900 mb-1">Công thức cốt lõi cho $\vec{a}(x_1; y_1; z_1)$ và $\vec{b}(x_2; y_2; z_2)$:</p>
+                                <p>• Cộng/trừ/nhân vô hàm: $\vec{a} \pm \vec{b} = (x_1 \pm x_2; y_1 \pm y_2; z_1 \pm z_2)$ và $k\vec{a} = (kx_1; ky_1; kz_1)$.</p>
+                                <p class="mt-1">• Tọa độ điểm từ hai đầu mút $A(x_A; y_A; z_A)$ và $B(x_B; y_B; z_B)$:</p>
+                                <p class="font-mono text-teal-800 font-semibold mt-1">$\vec{AB} = (x_B - x_A; y_B - y_A; z_B - z_A)$</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-2xl p-5 border border-emerald-200 shadow-sm">
+                    <h3 class="text-base font-bold text-slate-900 mb-3 flex items-center gap-2">
+                        <i class="fa-solid fa-star text-emerald-700"></i> Các công thức đặc biệt nâng cao trong Oxyz
+                    </h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs text-slate-700">
+                        <div class="p-3 bg-emerald-50/40 rounded-xl border border-emerald-100">
+                            <span class="font-bold text-emerald-800 block mb-1">Tọa độ trung điểm đoạn thẳng $I$ của $AB$:</span>
+                            $x_I = \frac{x_A + x_B}{2}, \quad y_I = \frac{y_A + y_B}{2}, \quad z_I = \frac{z_A + z_B}{2}$
+                        </div>
+                        <div class="p-3 bg-emerald-50/40 rounded-xl border border-emerald-100">
+                            <span class="font-bold text-emerald-800 block mb-1">Tọa độ trọng tâm $G$ của tam giác $ABC$:</span>
+                            $x_G = \frac{x_A + x_B + x_C}{3}$ (tương tự cho tung và cao độ).
+                        </div>
+                        <div class="p-3 bg-emerald-50/40 rounded-xl border border-emerald-100">
+                            <span class="font-bold text-emerald-800 block mb-1">Khoảng cách giữa hai điểm $A$ và $B$:</span>
+                            $AB = \sqrt{(x_B - x_A)^2 + (y_B - y_A)^2 + (z_B - z_A)^2}$
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==========================================
+             BÀI 9: BIỂU THỨC TOẠ ĐỘ CỦA CÁC PHÉP TOÁN VECTƠ (Mở rộng chi tiết & hay hơn)
+             ========================================== -->
+        <div id="page-8" class="page-view">
+            <div class="space-y-6">
+                <div class="glass-card rounded-2xl p-6 relative overflow-hidden border-l-4 border-l-teal-600 shadow-sm">
+                    <div class="flex justify-between items-start gap-4">
+                        <div>
+                            <span class="text-xs font-mono font-semibold uppercase text-teal-700 tracking-wider">Bài 09 - Chương II (SGK Kết nối tri thức)</span>
+                            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1">Biểu thức toạ độ của các phép toán vectơ</h2>
+                            <p class="text-slate-600 text-sm mt-2 max-w-2xl">
+                                Khám phá sức mạnh của tích vô hướng, tích có hướng (tích vectơ) và ứng dụng hình học giải quyết các bài toán diện tích, thể tích khối chóp/hộp.
+                            </p>
+                        </div>
+                        <div class="hidden sm:flex text-4xl text-teal-600/20 transition-transform hover:scale-110">
+                            <i class="fa-solid fa-calculator text-4xl"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="glass-card rounded-2xl p-5 hover:border-teal-300 transition-all shadow-sm">
+                        <h3 class="text-base font-bold text-teal-800 mb-3 flex items-center gap-2">
+                            <i class="fa-solid fa-crosshairs"></i> 1. Tích vô hướng & Góc giữa hai vectơ
+                        </h3>
+                        <div class="space-y-3 text-xs text-slate-700">
+                            <div class="p-3 bg-emerald-50/45 rounded-xl border border-emerald-100">
+                                <p class="font-bold text-slate-900 mb-1">Biểu thức tọa độ tích vô hướng:</p>
+                                <p>• Cho $\vec{a}(x_1; y_1; z_1)$ và $\vec{b}(x_2; y_2; z_2)$, ta có: <br> $\vec{a} \cdot \vec{b} = x_1x_2 + y_1y_2 + z_1z_2$.</p>
+                                <p class="mt-1">• Góc giữa hai vectơ $\cos(\vec{a}, \vec{b}) = \frac{\vec{a} \cdot \vec{b}}{|\vec{a}| |\vec{b}|} = \frac{x_1x_2 + y_1y_2 + z_1z_2}{\sqrt{x_1^2+y_1^2+z_1^2}\sqrt{x_2^2+y_2^2+z_2^2}}$.</p>
+                                <p class="mt-1 text-teal-800 font-semibold">• Điều kiện vuông góc: $\vec{a} \perp \vec{b} \iff x_1x_2 + y_1y_2 + z_1z_2 = 0$.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card rounded-2xl p-5 hover:border-emerald-300 transition-all shadow-sm">
+                        <h3 class="text-base font-bold text-emerald-800 mb-3 flex items-center gap-2">
+                            <i class="fa-solid fa-shapes"></i> 2. Tích có hướng (Tích vectơ) của hai vectơ
+                        </h3>
+                        <div class="space-y-3 text-xs text-slate-700">
+                            <div class="p-3 bg-emerald-50/45 rounded-xl border border-emerald-100">
+                                <p class="font-bold text-slate-900 mb-1">Định nghĩa & Mẹo nhớ định thức:</p>
+                                <p>• Ký hiệu $[\vec{a}, \vec{b}]$ là một vectơ vuông góc đồng thời với cả $\vec{a}$ và $\vec{b}$:</p>
+                                <p class="mt-1 font-mono bg-white p-2 rounded border border-emerald-200 text-teal-900 font-semibold">
+                                    $[\vec{a}, \vec{b}] = \left( \begin{vmatrix} y_1 & z_1 \\ y_2 & z_2 \end{vmatrix}; \begin{vmatrix} z_1 & x_1 \\ z_2 & x_2 \end{vmatrix}; \begin{vmatrix} x_1 & y_1 \\ x_2 & y_2 \end{vmatrix} \right)$
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-2xl p-5 border border-emerald-200 shadow-sm">
+                    <h3 class="text-base font-bold text-slate-900 mb-3 flex items-center gap-2">
+                        <i class="fa-solid fa-graduation-cap text-teal-700"></i> Các ứng dụng hình học không gian trọng điểm
+                    </h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs text-slate-700">
+                        <div class="p-3 bg-emerald-50/40 rounded-xl border border-emerald-100">
+                            <span class="font-bold text-teal-800 block mb-1">Diện tích tam giác $ABC$:</span>
+                            $S_{ABC} = \frac{1}{2} |[\vec{AB}, \vec{AC}]|$ (rất nhanh và chuẩn xác trong không gian).
+                        </div>
+                        <div class="p-3 bg-emerald-50/40 rounded-xl border border-emerald-100">
+                            <span class="font-bold text-teal-800 block mb-1">Thể tích tứ diện $ABCD$:</span>
+                            $V_{ABCD} = \frac{1}{6} |[\vec{AB}, \vec{AC}] \cdot \vec{AD}|$ (tích hỗn tạp của 3 vectơ).
+                        </div>
+                        <div class="p-3 bg-emerald-50/40 rounded-xl border border-emerald-100">
+                            <span class="font-bold text-teal-800 block mb-1">Điều kiện đồng phẳng:</span>
+                            Ba vectơ $\vec{a}, \vec{b}, \vec{c}$ đồng phẳng $\iff [\vec{a}, \vec{b}] \cdot \vec{c} = 0$.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==========================================
+             BÀI 10: PHƯƠNG TRÌNH MẶT PHẲNG (Mở rộng chi tiết & hay hơn)
+             ========================================== -->
+        <div id="page-9" class="page-view">
+            <div class="space-y-6">
+                <div class="glass-card rounded-2xl p-6 relative overflow-hidden border-l-4 border-l-emerald-700 shadow-sm">
+                    <div class="flex justify-between items-start gap-4">
+                        <div>
+                            <span class="text-xs font-mono font-semibold uppercase text-emerald-700 tracking-wider">Bài 10 - Chương II (SGK Kết nối tri thức)</span>
+                            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1">Phương trình mặt phẳng trong không gian</h2>
+                            <p class="text-slate-600 text-sm mt-2 max-w-2xl">
+                                Tìm hiểu tường tận về vectơ pháp tuyến, phương trình tổng quát mặt phẳng, các dạng toán đặc biệt và công thức khoảng cách cực kỳ quan trọng.
+                            </p>
+                        </div>
+                        <div class="hidden sm:flex text-4xl text-emerald-700/20 transition-transform hover:scale-110">
+                            <i class="fa-solid fa-layer-group text-4xl"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="glass-card rounded-2xl p-5 hover:border-emerald-300 transition-all shadow-sm">
+                        <h3 class="text-base font-bold text-emerald-800 mb-3 flex items-center gap-2">
+                            <i class="fa-solid fa-file-pen"></i> 1. Vectơ pháp tuyến & Phương trình tổng quát
+                        </h3>
+                        <div class="space-y-3 text-xs text-slate-700">
+                            <div class="p-3 bg-emerald-50/45 rounded-xl border border-emerald-100">
+                                <p class="font-bold text-slate-900 mb-1">Định nghĩa & Công thức:</p>
+                                <p>• Vectơ $\vec{n} \neq \vec{0}$ có giá vuông góc với mặt phẳng $(P)$ gọi là vectơ pháp tuyến của $(P)$.</p>
+                                <p class="mt-1">• Nếu $(P)$ đi qua điểm $M_0(x_0; y_0; z_0)$ và nhận $\vec{n}(A; B; C)$ làm VTPT thì phương trình tổng quát là:</p>
+                                <p class="mt-1 font-mono bg-white p-2 rounded border border-emerald-200 text-center text-emerald-800 font-bold">
+                                    $A(x - x_0) + B(y - y_0) + C(z - z_0) = 0$
+                                </p>
+                                <p class="mt-1 text-slate-500">Hay viết gọn thành: $Ax + By + Cz + D = 0$ (với $A^2 + B^2 + C^2 > 0$).</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card rounded-2xl p-5 hover:border-teal-300 transition-all shadow-sm">
+                        <h3 class="text-base font-bold text-teal-800 mb-3 flex items-center gap-2">
+                            <i class="fa-solid fa-bullseye"></i> 2. Khoảng cách & Vị trí tương đối
+                        </h3>
+                        <div class="space-y-3 text-xs text-slate-700">
+                            <div class="p-3 bg-emerald-50/45 rounded-xl border border-emerald-100">
+                                <p class="font-bold text-slate-900 mb-1">Công thức tính khoảng cách điểm đến mặt phẳng:</p>
+                                <p>• Cho điểm $M_0(x_0; y_0; z_0)$ và mặt phẳng $(P): Ax + By + Cz + D = 0$:</p>
+                                <p class="mt-1 font-mono bg-white p-2 rounded border border-emerald-200 text-center text-teal-800 font-bold">
+                                    $d(M_0, (P)) = \frac{|Ax_0 + By_0 + Cz_0 + D|}{\sqrt{A^2 + B^2 + C^2}}$
+                                </p>
+                                <p class="mt-1 text-slate-600">• Dùng để giải quyết các bài toán khoảng cách từ đỉnh đến mặt đáy trong hình học không gian cực nhanh.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-2xl p-5 border border-amber-200 shadow-sm">
+                    <h3 class="text-base font-bold text-slate-900 mb-3 flex items-center gap-2">
+                        <i class="fa-solid fa-lightbulb text-amber-600"></i> Các dạng mặt phẳng đặc biệt thường gặp trong đề thi
+                    </h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs text-slate-700">
+                        <div class="p-3 bg-emerald-50/40 rounded-xl border border-emerald-100">
+                            <span class="font-bold text-amber-800 block mb-1">Mặt phẳng theo đoạn chắn:</span>
+                            $(P): \frac{x}{a} + \frac{y}{b} + \frac{z}{c} = 1$ (cắt các trục lần lượt tại $(a;0;0)$, $(0;b;0)$, $(0;0;c)$).
+                        </div>
+                        <div class="p-3 bg-emerald-50/40 rounded-xl border border-emerald-100">
+                            <span class="font-bold text-amber-800 block mb-1">Các mặt phẳng tọa độ:</span>
+                            $(Oxy): z = 0$; <br>$(Oyz): x = 0$; <br>$(Ozx): y = 0$.
+                        </div>
+                        <div class="p-3 bg-emerald-50/40 rounded-xl border border-emerald-100">
+                            <span class="font-bold text-amber-800 block mb-1">Song song hoặc vuông góc:</span>
+                            Mặt phẳng song song với $(P): Ax+By+Cz+D=0$ sẽ có dạng: $Ax+By+Cz+D' = 0$ ($D' \neq D$).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Navigation Footer Bar -->
+    <footer class="max-w-5xl mx-auto px-4 py-4 w-full z-10">
+        <div class="glass-card rounded-2xl p-4 flex items-center justify-between gap-4 shadow-sm">
+            <button id="prev-btn" onclick="prevTab()" class="px-4 py-2 rounded-xl bg-white border border-emerald-200 hover:border-emerald-500 text-slate-700 hover:text-slate-900 transition-all duration-300 text-xs font-bold flex items-center gap-2 disabled:opacity-30 disabled:pointer-events-none shadow-sm hover:scale-105 active:scale-95">
+                <i class="fa-solid fa-arrow-left"></i> Bài trước
+            </button>
+
+            <!-- Page Indicator Dots (9 trang tương ứng với 9 nút bài học) -->
+            <div class="flex items-center gap-1.5 flex-wrap justify-center max-w-xs" id="page-dots">
+                <span onclick="switchTab(1)" class="w-2.5 h-2.5 rounded-full bg-emerald-700 cursor-pointer transition-all duration-300 hover:scale-125"></span>
+                <span onclick="switchTab(2)" class="w-2 h-2 rounded-full bg-slate-300 cursor-pointer transition-all duration-300 hover:scale-125"></span>
+                <span onclick="switchTab(3)" class="w-2 h-2 rounded-full bg-slate-300 cursor-pointer transition-all duration-300 hover:scale-125"></span>
+                <span onclick="switchTab(4)" class="w-2 h-2 rounded-full bg-slate-300 cursor-pointer transition-all duration-300 hover:scale-125"></span>
+                <span onclick="switchTab(5)" class="w-2 h-2 rounded-full bg-slate-300 cursor-pointer transition-all duration-300 hover:scale-125"></span>
+                <span onclick="switchTab(6)" class="w-2 h-2 rounded-full bg-slate-300 cursor-pointer transition-all duration-300 hover:scale-125"></span>
+                <span onclick="switchTab(7)" class="w-2 h-2 rounded-full bg-slate-300 cursor-pointer transition-all duration-300 hover:scale-125"></span>
+                <span onclick="switchTab(8)" class="w-2 h-2 rounded-full bg-slate-300 cursor-pointer transition-all duration-300 hover:scale-125"></span>
+                <span onclick="switchTab(9)" class="w-2 h-2 rounded-full bg-slate-300 cursor-pointer transition-all duration-300 hover:scale-125"></span>
+            </div>
+
+            <button id="next-btn" onclick="nextTab()" class="px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 text-white transition-all duration-300 text-xs font-extrabold flex items-center gap-2 hover:opacity-90 shadow-md shadow-emerald-500/25 hover:scale-105 active:scale-95">
+                Bài tiếp <i class="fa-solid fa-arrow-right"></i>
+            </button>
+        </div>
+        <p class="text-center text-[11px] text-slate-500 mt-3">
+            Tóm tắt chương trình Toán 12 (Từ Bài 1 đến Bài 10) - Sách Kết nối tri thức với cuộc sống.
+        </p>
+    </footer>
+
+    <!-- JavaScript Logic for Page Navigation & Interactions -->
+    <script>
+        let currentTab = 1;
+        const totalTabs = 9; // Tổng cộng 9 trang giao diện tương ứng với các nút bài học
+
+        function switchTab(tabIndex) {
+            if (tabIndex === currentTab || tabIndex < 1 || tabIndex > totalTabs) return;
+
+            const currentElement = document.getElementById(`page-${currentTab}`);
+            const nextElement = document.getElementById(`page-${tabIndex}`);
+
+            if (tabIndex > currentTab) {
+                currentElement.classList.add('prev-out');
+            } else {
+                currentElement.classList.remove('active');
+            }
+
+            setTimeout(() => {
+                currentElement.classList.remove('active', 'prev-out');
+                nextElement.classList.add('active');
+                currentTab = tabIndex;
+                updateNavUI();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 300);
+        }
+
+        function nextTab() {
+            if (currentTab < totalTabs) switchTab(currentTab + 1);
+        }
+
+        function prevTab() {
+            if (currentTab > 1) switchTab(currentTab - 1);
+        }
+
+        function updateNavUI() {
+            for (let i = 1; i <= totalTabs; i++) {
+                const btn = document.getElementById(`nav-btn-${i}`);
+                const mobBtn = document.getElementById(`mob-btn-${i}`);
+                
+                if (btn) {
+                    if (i === currentTab) {
+                        btn.className = "nav-tab px-2.5 py-1.5 rounded-lg text-xs font-semibold transition-all duration-300 text-emerald-700 bg-white shadow-sm scale-105 whitespace-nowrap";
+                    } else {
+                        btn.className = "nav-tab px-2.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition-all duration-300 whitespace-nowrap";
+                    }
+                }
+                if (mobBtn) {
+                    if (i === currentTab) {
+                        mobBtn.className = "mob-tab py-1.5 rounded-lg text-[10px] font-bold text-emerald-700 bg-emerald-50 transition-all scale-105";
+                    } else {
+                        mobBtn.className = "mob-tab py-1.5 rounded-lg text-[10px] font-bold text-slate-600 transition-all";
+                    }
+                }
+            }
+
+            const dots = document.getElementById('page-dots').children;
+            for (let i = 0; i < dots.length; i++) {
+                if (i === currentTab - 1) {
+                    dots[i].className = "w-3.5 h-2.5 rounded-full bg-emerald-700 cursor-pointer transition-all duration-300 scale-125 shadow-sm";
+                } else {
+                    dots[i].className = "w-2 h-2 rounded-full bg-slate-300 cursor-pointer transition-all duration-300 hover:bg-slate-400";
+                }
+            }
+
+            document.getElementById('prev-btn').disabled = (currentTab === 1);
+            const nextBtn = document.getElementById('next-btn');
+            if (currentTab === totalTabs) {
+                nextBtn.innerHTML = 'Hoàn thành <i class="fa-solid fa-check"></i>';
+                nextBtn.classList.add('opacity-70');
+            } else {
+                nextBtn.innerHTML = 'Bài tiếp <i class="fa-solid fa-arrow-right"></i>';
+                nextBtn.classList.remove('opacity-70');
+            }
+
+            if (window.renderMathInElement) {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false},
+                        {left: '\\(', right: '\\)', display: false},
+                        {left: '[', right: ']', display: true}
+                    ]
+                });
+            }
+        }
+
+        function toggleFlashcard(id) {
+            const el = document.getElementById(id);
+            const icon = document.getElementById(`${id}-icon`);
+            if (el.classList.contains('hidden')) {
+                el.classList.remove('hidden');
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(-10px)';
+                setTimeout(() => {
+                    el.style.transition = 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)';
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
+                }, 10);
+                icon.style.transform = 'rotate(0deg)';
+            } else {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(-10px)';
+                setTimeout(() => {
+                    el.classList.add('hidden');
+                }, 300);
+                icon.style.transform = 'rotate(-90deg)';
+            }
+        }
+
+        function toggleAllFlashcards() {
+            // Chuyển đổi ẩn/hiện hộp bài tập khi bấm nút Bài tập trên header
+            const exBox = document.getElementById('exercise-box');
+            if (exBox) {
+                if (exBox.classList.contains('hidden')) {
+                    exBox.classList.remove('hidden');
+                    exBox.style.opacity = '0';
+                    setTimeout(() => {
+                        exBox.style.transition = 'all 0.4s ease';
+                        exBox.style.opacity = '1';
+                    }, 10);
+                    // Tự động chuyển về Bài 1 để người dùng thấy ngay nội dung bài tập vừa mở
+                    if (currentTab !== 1) switchTab(1);
+                } else {
+                    exBox.classList.add('hidden');
+                }
+            }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextTab();
+            if (e.key === 'ArrowLeft') prevTab();
+        });
+
+        window.onload = function() {
+            updateNavUI();
+        };
+    </script>
+</body>
+</html>
